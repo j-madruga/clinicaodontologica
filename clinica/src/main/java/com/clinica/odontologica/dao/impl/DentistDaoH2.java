@@ -1,7 +1,7 @@
 package com.clinica.odontologica.dao.impl;
 
 import com.clinica.odontologica.dao.IDao;
-import com.clinica.odontologica.model.Dentist;
+import com.clinica.odontologica.repository.entity.Dentist;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

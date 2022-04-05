@@ -1,9 +1,24 @@
-package com.clinica.odontologica.model;
+package com.clinica.odontologica.repository.entity;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+
+@Entity @Getter @Setter
+@Table(name ="DENTIST")
 public class Dentist {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id = null;
+
+    @Column(name = "license")
     private String license;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "last_name")
     private String lastName;
 
     // Full constructor
@@ -22,38 +37,6 @@ public class Dentist {
 
     // Empty constructor
     public Dentist() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getLicense() {
-        return license;
-    }
-
-    public void setLicense(String license) {
-        this.license = license;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     @Override

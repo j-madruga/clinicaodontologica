@@ -1,13 +1,37 @@
 package com.clinica.odontologica.service;
 
 import com.clinica.odontologica.dao.IDao;
-import com.clinica.odontologica.model.Dentist;
+import com.clinica.odontologica.model.DentistDTO;
+import com.clinica.odontologica.repository.entity.Dentist;
+import com.clinica.odontologica.repository.irepository.IDentistRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class DentistService {
+
+    public DentistService() {
+    }
+
+    @Autowired
+    public void setiDentistRepository(IDentistRepository iDentistRepository) {
+        this.iDentistRepository = iDentistRepository;
+    }
+
+    private IDentistRepository iDentistRepository;
+
+    @Autowired
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+    private ObjectMapper objectMapper;
 
     IDao<Dentist> dentistDaoH2 = null;
 
@@ -17,13 +41,10 @@ public class DentistService {
         this.dentistDaoH2 = dentistDao;
     }
 
-    public String saveDentist(Dentist dentist) {
-        Dentist dentistSaved = dentistDaoH2.save(dentist);
-        if (dentistSaved.getId() != null) {
-            return "Dentist saved successfully.";
-        } else {
-            return "Could not save dentist.";
-        }
+    public DentistDTO saveDentist(DentistDTO dentistDTO) {
+        Dentist dentist = objectMapper.convertValue(dentistDTO, Dentist.class);
+        Dentist savedDentist = iDentistRepository.save(dentist);
+        return objectMapper.convertValue(savedDentist, DentistDTO.class);
     }
 
     public Dentist findDentistById(Long id) throws Exception {
@@ -36,14 +57,11 @@ public class DentistService {
         return dentistFound;
     }
 
-    public List<Dentist> findAllDentists() throws Exception{
-        List<Dentist> dentistList = dentistDaoH2.findAll();
-        if (dentistList.isEmpty()) {
-                Exception e = new Exception("There are not dentists records at the database.");
-                logger.error(e.getMessage());
-                throw e;
-        }
-        return dentistList;
+    public List<DentistDTO> findAllDentists() {
+        List<Dentist> dentistList = iDentistRepository.findAll();
+        List<DentistDTO> dentistDTOList = new ArrayList<>();
+        dentistList.forEach(dentist -> dentistDTOList.add(objectMapper.convertValue(dentist, DentistDTO.class)));
+        return dentistDTOList;
     }
 
     public Dentist updateDentistName(Long id, String newName) throws Exception {

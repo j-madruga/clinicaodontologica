@@ -1,8 +1,10 @@
-package com.clinica.odontologica.model;
+package com.clinica.odontologica.repository.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Repository;
 
+import javax.persistence.Entity;
 import java.util.Date;
 
 public class Appointment {
