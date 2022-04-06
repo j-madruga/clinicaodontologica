@@ -4,28 +4,49 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Entity;
-import java.util.Date;
+import javax.persistence.*;
+import java.sql.Date;
 
+@Entity
+@Getter
+@Setter
+@Table(name = "APPOINTMENT")
 public class Appointment {
-    @Getter @Setter
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Getter @Setter
+    @Column(name = "id_patient")
     private Patient patient;
-    @Getter @Setter
+    @Column(name = "id_dentist")
     private Dentist dentist;
-    @Getter @Setter
-    private Date date;
-
-    public Appointment() {
-
-    }
+    @Column(name = "")
+    private java.sql.Date date;
 
     public Appointment(Integer id, Patient patient, Dentist dentist, Date date) {
         this.id = id;
         this.patient = patient;
         this.dentist = dentist;
         this.date = date;
+    }
+
+    public Appointment(Patient patient, Dentist dentist, Date date) {
+        this.patient = patient;
+        this.dentist = dentist;
+        this.date = date;
+    }
+
+    public Appointment() {
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "id=" + id +
+                ", patient=" + patient +
+                ", dentist=" + dentist +
+                ", date=" + date +
+                '}';
     }
 
 }
