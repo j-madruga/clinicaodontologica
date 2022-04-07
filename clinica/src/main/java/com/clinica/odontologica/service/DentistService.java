@@ -23,14 +23,12 @@ public class DentistService {
     public void setiDentistRepository(IDentistRepository iDentistRepository) {
         this.iDentistRepository = iDentistRepository;
     }
-
     private IDentistRepository iDentistRepository;
 
     @Autowired
     public void setObjectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
-
     private ObjectMapper objectMapper;
 
     IDao<Dentist> dentistDaoH2 = null;

@@ -25,22 +25,27 @@ public class Patient {
     private Date admissionDate;
     @Column(name = "discharge_date")
     private Date dischargeDate;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // no se borra xq otros pacientes pueden tener la misma direccion
+    @JoinColumn(name = "id_address", nullable = false)
+    private Address address;
 
-    public Patient(Long id, String dni, String name, String lastName, Date admissionDate, Date dischargeDate) {
+    public Patient(Long id, String dni, String name, String lastName, Date admissionDate, Date dischargeDate, Address addres) {
         this.id = id;
         this.dni = dni;
         this.name = name;
         this.lastName = lastName;
         this.admissionDate = admissionDate;
         this.dischargeDate = dischargeDate;
+        this.address = addres;
     }
 
-    public Patient(String dni, String name, String lastName, Date admissionDate, Date dischargeDate) {
+    public Patient(String dni, String name, String lastName, Date admissionDate, Date dischargeDate, Address addres) {
         this.dni = dni;
         this.name = name;
         this.lastName = lastName;
         this.admissionDate = admissionDate;
         this.dischargeDate = dischargeDate;
+        this.address = addres;
     }
 
     public Patient() {

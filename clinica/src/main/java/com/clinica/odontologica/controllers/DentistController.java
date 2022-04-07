@@ -2,10 +2,12 @@ package com.clinica.odontologica.controllers;
 
 import com.clinica.odontologica.dao.impl.DentistDaoH2;
 import com.clinica.odontologica.model.DentistDTO;
+import com.clinica.odontologica.repository.entity.Address;
 import com.clinica.odontologica.repository.entity.Dentist;
 
 import com.clinica.odontologica.service.DentistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +21,7 @@ public class DentistController {
     @Autowired
     DentistService dentistService;
 
+
     @PostMapping("/dentist")
     public DentistDTO registrarOdontologo(@RequestBody DentistDTO dentistDTO) {
         return dentistService.saveDentist(dentistDTO);
@@ -29,6 +32,7 @@ public class DentistController {
     public List<DentistDTO> getAllDentistsDTO(){
         return dentistService.findAllDentists();
     }
+
 
 //    @PutMapping()
 //    public ResponseEntity<Odontologo> actualizar(@RequestBody Odontologo odontologo) {
