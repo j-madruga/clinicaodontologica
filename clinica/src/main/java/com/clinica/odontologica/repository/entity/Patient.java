@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -22,45 +25,13 @@ public class Patient {
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "admission_date")
-    private Date admissionDate;
+    private LocalDate admissionDate;
     @Column(name = "discharge_date")
-    private Date dischargeDate;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // no se borra xq otros pacientes pueden tener la misma direccion
-    @JoinColumn(name = "id_address", nullable = false)
+    private LocalDate dischargeDate;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE) // no se borra xq otros pacientes pueden tener la misma direccion
+    @JoinColumn(name = "id_address", referencedColumnName = "id")
     private Address address;
-
-    public Patient(Long id, String dni, String name, String lastName, Date admissionDate, Date dischargeDate, Address addres) {
-        this.id = id;
-        this.dni = dni;
-        this.name = name;
-        this.lastName = lastName;
-        this.admissionDate = admissionDate;
-        this.dischargeDate = dischargeDate;
-        this.address = addres;
-    }
-
-    public Patient(String dni, String name, String lastName, Date admissionDate, Date dischargeDate, Address addres) {
-        this.dni = dni;
-        this.name = name;
-        this.lastName = lastName;
-        this.admissionDate = admissionDate;
-        this.dischargeDate = dischargeDate;
-        this.address = addres;
-    }
-
-    public Patient() {
-    }
-
-    @Override
-    public String toString() {
-        return "Patient{" +
-                "id=" + id +
-                ", dni='" + dni + '\'' +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", admissionDate=" + admissionDate +
-                ", dischargeDate=" + dischargeDate +
-                '}';
-    }
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+    private Set<Appointment> appointmensts = new HashSet<>();
 
 }

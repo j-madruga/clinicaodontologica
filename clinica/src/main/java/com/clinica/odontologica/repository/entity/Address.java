@@ -13,7 +13,7 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(name = "street")
     private String street;
     @Column(name = "street_number")
@@ -22,34 +22,8 @@ public class Address {
     private String city;
     @Column(name = "province")
     private String province;
+    @OneToOne(mappedBy = "address") // aca va el dato de Patient que va a mapear
+    private Patient patient;
 
-    public Address(Integer id, String street, String streetNumber, String city, String province) {
-        this.id = id;
-        this.street = street;
-        this.streetNumber = streetNumber;
-        this.city = city;
-        this.province = province;
-    }
-
-    public Address(String street, String streetNumber, String city, String province) {
-        this.street = street;
-        this.streetNumber = streetNumber;
-        this.city = city;
-        this.province = province;
-    }
-
-    public Address() {
-    }
-
-    @Override
-    public String toString() {
-        return "Address{" +
-                "id=" + id +
-                ", street='" + street + '\'' +
-                ", streetNumber='" + streetNumber + '\'' +
-                ", city='" + city + '\'' +
-                ", province='" + province + '\'' +
-                '}';
-    }
 
 }

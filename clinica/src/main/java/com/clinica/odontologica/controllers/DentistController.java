@@ -1,19 +1,10 @@
 package com.clinica.odontologica.controllers;
-
-import com.clinica.odontologica.dao.impl.DentistDaoH2;
 import com.clinica.odontologica.model.DentistDTO;
-import com.clinica.odontologica.repository.entity.Address;
-import com.clinica.odontologica.repository.entity.Dentist;
-
 import com.clinica.odontologica.service.DentistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
-import static org.springframework.http.ResponseEntity.ok;
-
 
 @RestController
 public class DentistController {
@@ -33,7 +24,15 @@ public class DentistController {
         return dentistService.findAllDentists();
     }
 
-
+    @GetMapping("/{license}")
+        public ResponseEntity<DentistDTO> getDentistByLicense(@RequestParam String license) {
+            DentistDTO dentistFound = dentistService.findByLicense(license);
+            if(dentistFound == null) {
+                return ResponseEntity.badRequest().body(dentistFound);
+            } else {
+                return ResponseEntity.ok().body(dentistFound);
+            }
+        }
 //    @PutMapping()
 //    public ResponseEntity<Odontologo> actualizar(@RequestBody Odontologo odontologo) {
 //        ResponseEntity<Odontologo> response = null;
