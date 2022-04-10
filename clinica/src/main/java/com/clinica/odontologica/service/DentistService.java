@@ -23,30 +23,23 @@ public class DentistService {
     public void setiDentistRepository(IDentistRepository iDentistRepository) {
         this.iDentistRepository = iDentistRepository;
     }
+
     private IDentistRepository iDentistRepository;
 
     @Autowired
     public void setObjectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
+
     private ObjectMapper objectMapper;
 
     final static Logger logger = LogManager.getLogger(DentistService.class);
 
-
-    public DentistDTO saveDentist(DentistDTO dentistDTO) {
-        Dentist dentist = objectMapper.convertValue(dentistDTO, Dentist.class);
-        Dentist savedDentist = iDentistRepository.save(dentist);
-        return objectMapper.convertValue(savedDentist, DentistDTO.class);
-    }
-
-    public DentistDTO findByLicense(String license) {
+    public DentistDTO findById(Long id) {
         DentistDTO dentistDTO = null;
-        Optional<Dentist> dentistEntity = iDentistRepository.findByLicense(license);
-        if(!dentistEntity.isPresent()) {
-            return dentistDTO;
-        } else {
-            dentistDTO = objectMapper.convertValue(dentistEntity.get(), DentistDTO.class);
+        Optional<Dentist> foundDentist = iDentistRepository.findById(id);
+        if (foundDentist.isPresent()) {
+            dentistDTO = objectMapper.convertValue(foundDentist.get(), DentistDTO.class);
         }
         return dentistDTO;
     }
@@ -58,5 +51,40 @@ public class DentistService {
         return dentistDTOList;
     }
 
+    public DentistDTO saveDentist(DentistDTO dentistDTO) {
+        Dentist dentist = objectMapper.convertValue(dentistDTO, Dentist.class);
+        Dentist savedDentist = iDentistRepository.save(dentist);
+        return objectMapper.convertValue(savedDentist, DentistDTO.class);
+    }
 
+    public DentistDTO findByLicense(String license) {
+        DentistDTO dentistDTO = null;
+        Optional<Dentist> dentistEntity = iDentistRepository.findByLicense(license);
+        if (!dentistEntity.isPresent()) {
+            return dentistDTO;
+        } else {
+            dentistDTO = objectMapper.convertValue(dentistEntity.get(), DentistDTO.class);
+        }
+        return dentistDTO;
+    }
+
+    public DentistDTO updateDentist(DentistDTO dentistDTO) {
+        DentistDTO updatedDentistDTO = null;
+        Dentist dentist = objectMapper.convertValue(dentistDTO, Dentist.class);
+        if (iDentistRepository.findById(dentist.getId()).isPresent()) {
+            Dentist dentistSaved = iDentistRepository.save(dentist);
+            updatedDentistDTO = objectMapper.convertValue(dentistSaved, DentistDTO.class);
+        }
+        return updatedDentistDTO;
+    }
+
+    public String deleteDentistById(Long id) {
+        String message = "Cant find dentist that matches the given id.";
+        Optional<Dentist> dentistToDelete = iDentistRepository.findById(id);
+        if (dentistToDelete.isPresent()) {
+            iDentistRepository.delete(dentistToDelete.get());
+            message = "Dentist deleted successfully.";
+        }
+        return message;
+    }
 }
