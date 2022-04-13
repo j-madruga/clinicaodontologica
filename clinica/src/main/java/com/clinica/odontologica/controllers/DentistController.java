@@ -1,7 +1,6 @@
 package com.clinica.odontologica.controllers;
 
 import com.clinica.odontologica.model.DentistDTO;
-import com.clinica.odontologica.repository.entity.Dentist;
 import com.clinica.odontologica.service.DentistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,8 +24,8 @@ public class DentistController {
      * @param id id of the dentist that is being searched
      * @return json
      */
-    @GetMapping
-    public ResponseEntity<DentistDTO> findDentistById(@RequestParam Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<DentistDTO> findDentistById(@PathVariable Long id) {
         ResponseEntity<DentistDTO> response = ResponseEntity.notFound().build();
         DentistDTO dentistDTO = dentistService.findById(id);
         if (dentistDTO != null) {
@@ -41,7 +40,7 @@ public class DentistController {
      *
      * @return json
      */
-    @GetMapping
+    @GetMapping("/all")
     public List<DentistDTO> findAllDentists() {
         return dentistService.findAllDentists();
     }
@@ -66,7 +65,7 @@ public class DentistController {
      * @param license the dentist license
      * @return json
      */
-    @GetMapping("/{license}")
+/*    @GetMapping("/{license}")
     public ResponseEntity<?> findDentistByLicense(@RequestParam String license) {
         DentistDTO dentistFound = dentistService.findByLicense(license);
         if (dentistFound == null) {
@@ -74,7 +73,7 @@ public class DentistController {
         } else {
             return ResponseEntity.ok().body(dentistFound);
         }
-    }
+    }*/
 
     /**
      * Returns (if exists) the updated dentist that matches the id

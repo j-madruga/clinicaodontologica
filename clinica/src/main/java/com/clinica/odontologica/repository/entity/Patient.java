@@ -1,10 +1,9 @@
 package com.clinica.odontologica.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,10 +27,12 @@ public class Patient {
     private LocalDate admissionDate;
     @Column(name = "discharge_date")
     private LocalDate dischargeDate;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE) // no se borra xq otros pacientes pueden tener la misma direccion
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_address", referencedColumnName = "id")
     private Address address;
-    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
-    private Set<Appointment> appointmensts = new HashSet<>();
+    /* esto no esta en la tabla DENTIST, lo trae java, x eso necesita el mappedBy */
+    @OneToMany(mappedBy = "patient")
+    @JsonIgnore
+    private Set<Appointment> appointments = new HashSet<>();
 
 }

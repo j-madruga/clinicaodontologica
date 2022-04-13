@@ -14,11 +14,11 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_patient")
+    @ManyToOne
+    @JoinColumn(name = "id_patient", nullable = false)
     private Patient patient;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_dentist")
+    @ManyToOne
+    @JoinColumn(name = "id_dentist", nullable = false)
     private Dentist dentist;
     @Column(name = "date")
     private LocalDate date;

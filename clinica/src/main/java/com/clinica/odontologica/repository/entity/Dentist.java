@@ -1,11 +1,11 @@
 package com.clinica.odontologica.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,7 +25,9 @@ public class Dentist {
     private String lastName;
     @Column(name = "email")
     private String email;
+    /* esto no esta en la tabla DENTIST, lo trae java, x eso necesita el mappedBy */
     @OneToMany(mappedBy = "dentist", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Appointment> appointments = new HashSet<>();
 
 }

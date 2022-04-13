@@ -22,8 +22,5 @@ public class Address {
     private String city;
     @Column(name = "province")
     private String province;
-    @OneToOne(mappedBy = "address") // aca va el dato de Patient que va a mapear
-    private Patient patient;
-
 
 }

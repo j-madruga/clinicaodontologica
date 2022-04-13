@@ -57,7 +57,7 @@ public class DentistService {
         return objectMapper.convertValue(savedDentist, DentistDTO.class);
     }
 
-    public DentistDTO findByLicense(String license) {
+/*    public DentistDTO findByLicense(String license) {
         DentistDTO dentistDTO = null;
         Optional<Dentist> dentistEntity = iDentistRepository.findByLicense(license);
         if (!dentistEntity.isPresent()) {
@@ -66,7 +66,7 @@ public class DentistService {
             dentistDTO = objectMapper.convertValue(dentistEntity.get(), DentistDTO.class);
         }
         return dentistDTO;
-    }
+    }*/
 
     public DentistDTO updateDentist(DentistDTO dentistDTO) {
         DentistDTO updatedDentistDTO = null;
