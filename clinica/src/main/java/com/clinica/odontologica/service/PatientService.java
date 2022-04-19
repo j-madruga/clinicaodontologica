@@ -1,6 +1,6 @@
 package com.clinica.odontologica.service;
 
-import com.clinica.odontologica.exception.GlobalExceptionHandler;
+import com.clinica.odontologica.exception.ControllerExceptionHandler;
 import com.clinica.odontologica.model.PatientDTO;
 import com.clinica.odontologica.repository.entity.Patient;
 import com.clinica.odontologica.repository.irepository.IPatientRepository;
@@ -29,12 +29,12 @@ public class PatientService {
         return response;
     }*/
 
-    public PatientDTO getById(Long id) throws GlobalExceptionHandler{
+    public PatientDTO getById(Long id) throws ControllerExceptionHandler {
         Optional<Patient> foundPatient = iPatientRepository.findById(id);
         if(foundPatient.isPresent()) {
             return objectMapper.convertValue(foundPatient.get(), PatientDTO.class);
         } else {
-            throw new GlobalExceptionHandler();
+            throw new ControllerExceptionHandler();
         }
     }
 

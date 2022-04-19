@@ -1,10 +1,8 @@
 package com.clinica.odontologica.controllers;
 
-import com.clinica.odontologica.exception.GlobalExceptionHandler;
-import com.clinica.odontologica.model.AddressDTO;
+import com.clinica.odontologica.exception.ControllerExceptionHandler;
 import com.clinica.odontologica.model.PatientDTO;
 import com.clinica.odontologica.repository.entity.Address;
-import com.clinica.odontologica.repository.entity.Patient;
 import com.clinica.odontologica.repository.irepository.IAddressRepository;
 import com.clinica.odontologica.service.AddressService;
 import com.clinica.odontologica.service.PatientService;
@@ -14,9 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.GenericSignatureFormatError;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/patient")
@@ -38,7 +34,7 @@ public class PatientController {
      * @return json: a PatientDTO
      */
     @GetMapping("/{id}")
-    public ResponseEntity<PatientDTO> getPatientById(@PathVariable Long id) throws GlobalExceptionHandler {
+    public ResponseEntity<PatientDTO> getPatientById(@PathVariable Long id) throws ControllerExceptionHandler {
             return ResponseEntity.ok(patientService.getById(id));
     }
 

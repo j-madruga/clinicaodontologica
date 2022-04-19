@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
-public class GlobalExceptionHandler extends Exception{
-    private static final Logger logger = LogManager.getLogger(GlobalExceptionHandler.class);
+public class ControllerExceptionHandler extends Exception{
+    private static final Logger LOGGER = LogManager.getLogger("com.log4j2.clinic");
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> allErrors(Exception ex, WebRequest req){
-        logger.error(ex.getMessage());
+        LOGGER.error(ex.getMessage());
         return new ResponseEntity("Error " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
