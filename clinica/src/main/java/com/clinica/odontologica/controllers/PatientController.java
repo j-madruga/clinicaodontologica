@@ -26,6 +26,7 @@ public class PatientController {
     ObjectMapper objectMapper;
     @Autowired
     AddressService addressService;
+
     /**
      * Gets a patient by id
      * GET: /patient/{id}
@@ -68,7 +69,7 @@ public class PatientController {
     }
 
     /**
-     * Saves a new patient
+     * Saves a new patient (without the address)
      * POST: /patient/save
      *
      * @param patientDTO: the patient to be saved
@@ -79,6 +80,13 @@ public class PatientController {
         return ResponseEntity.ok(patientService.savePatient(patientDTO));
     }
 
+    /**
+     * Saves a new patient and his address
+     * POST: /patient/save-with-address
+     *
+     * @param patientDTO: the patient to be saved
+     * @return json with the saved patient including the address
+     */
     @PostMapping("/save-with-address")
     public ResponseEntity<PatientDTO> savePatientAndAddress(@RequestBody PatientDTO patientDTO) {
         ResponseEntity<PatientDTO> response = ResponseEntity.notFound().build();
@@ -88,6 +96,27 @@ public class PatientController {
             savedPatient = patientService.savePatient(patientDTO);
             if(savedPatient.getId() != null) {
                 response = ResponseEntity.ok(savedPatient);
+            }
+        }
+        return response;
+    }
+
+    /**
+     * Updates an existing patient and his address
+     * POST: /patient/save-with-address
+     *
+     * @param patientDTO: the patient to be saved
+     * @return json with the saved patient including the address
+     */
+    @PutMapping()
+    public ResponseEntity<PatientDTO> updatePatientAndAddress(@RequestBody PatientDTO patientDTO) {
+        ResponseEntity<PatientDTO> response = ResponseEntity.notFound().build();
+        PatientDTO updatedPatient = null;
+        Boolean isAddressSaved = addressService.updateAddressFromPatientDTO(patientDTO);
+        if (isAddressSaved) {
+            updatedPatient = patientService.savePatient(patientDTO);
+            if(updatedPatient.getId() != null) {
+                response = ResponseEntity.ok(updatedPatient);
             }
         }
         return response;

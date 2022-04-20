@@ -44,4 +44,14 @@ public class AddressService {
         }
         return response;
     }
+
+    public Boolean updateAddressFromPatientDTO(PatientDTO patientDTO) {
+        Boolean addressExists = false;
+        Address addresToUpdate = objectMapper.convertValue(patientDTO.getAddress(), Address.class);
+        Optional<Address> foundAddress = iAddressRepository.findById(addresToUpdate.getId());
+        if (foundAddress.isPresent()) {
+            Address updatedAddress = iAddressRepository.save(addresToUpdate);
+        }
+        return addressExists;
+    }
 }
