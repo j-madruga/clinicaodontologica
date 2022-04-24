@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataLoader implements ApplicationRunner {
 
+     @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -19,11 +20,13 @@ public class DataLoader implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String password = passwordEncoder.encode("password");
-        String password2 = passwordEncoder.encode("password2");
+        String passAdmin = passwordEncoder.encode("password");
+        String passJosu = passwordEncoder.encode("password");
 
-        userRepository.save(new User("charli", "charli", "charli@dh.com", password, Role.ROLE_ADMIN));
-        userRepository.save(new User("jorgi", "jorgi", "jorgi@dh.com", password2, Role.ROLE_USER));
+        if(!userRepository.findByEmail("admin@dh.com").isPresent() && !userRepository.findByEmail("josu@dh.com").isPresent()) {
+            userRepository.save(new User("admin", "admin", "admin@dh.com", passAdmin, Role.ROLE_ADMIN));
+            userRepository.save(new User("josue", "josu", "josu@dh.com", passJosu, Role.ROLE_USER));
+        }
     }
 
 }
