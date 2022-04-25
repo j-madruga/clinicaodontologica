@@ -1,4 +1,4 @@
-package com.clinica.odontologica.login;
+package com.clinica.odontologica.repository.entity;
 
 import lombok.Getter;
 import lombok.Setter;

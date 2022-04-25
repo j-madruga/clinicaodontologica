@@ -20,15 +20,6 @@ public class PatientService {
     @Autowired
     private ObjectMapper objectMapper;
 
-/*    public PatientDTO getById(Long id) {
-        PatientDTO response = null;
-        Optional<Patient> foundPatient = iPatientRepository.findById(id);
-        if(foundPatient.isPresent()) {
-            response = objectMapper.convertValue(foundPatient.get(), PatientDTO.class);
-        }
-        return response;
-    }*/
-
     public PatientDTO getById(Long id) throws ControllerExceptionHandler {
         Optional<Patient> foundPatient = iPatientRepository.findById(id);
         if(foundPatient.isPresent()) {
@@ -59,13 +50,21 @@ public class PatientService {
         iPatientRepository.deleteById(id);
     }
 
-    public Patient findPatientById(Long id) {
+    public PatientDTO findPatientById(Long id) {
+        PatientDTO patientDTO = null;
         Optional<Patient> foundPatient = iPatientRepository.findById(id);
-        return foundPatient.orElse(null);
+        if(foundPatient.isPresent()) {
+            patientDTO = objectMapper.convertValue(foundPatient.get(), PatientDTO.class);
+        }
+        return patientDTO;
     }
 
-    public Patient updatePatient(Patient p) {
-        return iPatientRepository.save(p);
+    public PatientDTO updatePatient(PatientDTO patientDTO) {
+        PatientDTO updatedPatient = null;
+        if (findPatientById(patientDTO.getId()) != null) {
+            updatedPatient = savePatient(patientDTO);
+        }
+        return updatedPatient;
     }
 
 }

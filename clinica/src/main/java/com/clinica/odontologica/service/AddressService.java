@@ -23,18 +23,6 @@ public class AddressService {
         return objectMapper.convertValue(savedAddress, AddressDTO.class);
     }
 
-    public Boolean saveAddressFromPatientDTO(PatientDTO patientDTO) {
-        Boolean isAddressSaved = false;
-        Address savedAddress = null;
-        Address addressToSave = objectMapper.convertValue(patientDTO.getAddress(), Address.class);
-        if (addressToSave != null) {
-            savedAddress = iAddressRepository.save(addressToSave);
-            if (savedAddress.getId() != null) {
-                isAddressSaved = true;
-            }
-        }
-        return isAddressSaved;
-    }
 
     public AddressDTO getAddressById(Long id) {
         AddressDTO response = null;

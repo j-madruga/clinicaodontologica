@@ -12,7 +12,8 @@ import java.time.LocalDate;
 public class Appointment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name="appointment_sequence", sequenceName = "appointment_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appointment_sequence")
     private Long id;
     @ManyToOne
     @JoinColumn(name = "id_patient", nullable = false)
@@ -22,6 +23,5 @@ public class Appointment {
     private Dentist dentist;
     @Column(name = "date")
     private LocalDate date;
-
 
 }

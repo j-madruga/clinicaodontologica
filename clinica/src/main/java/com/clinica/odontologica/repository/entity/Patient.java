@@ -15,7 +15,8 @@ import java.util.Set;
 public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name="patient_sequence", sequenceName = "patient_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "patient_sequence")
     private Long id = null;
     @Column(name = "dni")
     private String dni;

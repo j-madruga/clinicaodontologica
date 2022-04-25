@@ -1,8 +1,10 @@
 package com.clinica.odontologica.model;
+
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class DentistDTO {
 
     private Long id = null;
@@ -17,7 +19,7 @@ public class DentistDTO {
         this.lastName = lastName;
     }
 
-    public DentistDTO(){
+    public DentistDTO() {
 
     }
 

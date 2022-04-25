@@ -25,7 +25,7 @@ public class DentistController {
      * @return json
      */
     @GetMapping("/{id}")
-    public ResponseEntity<DentistDTO> findDentistById(@PathVariable Long id) {
+    public ResponseEntity<DentistDTO> getDentistById(@PathVariable Long id) {
         ResponseEntity<DentistDTO> response = ResponseEntity.notFound().build();
         DentistDTO dentistDTO = dentistService.findById(id);
         if (dentistDTO != null) {
@@ -83,8 +83,8 @@ public class DentistController {
      * @return json
      */
     @PutMapping("/update")
-    public ResponseEntity<?> updateDentist(@RequestBody DentistDTO dentistDTO) {
-        ResponseEntity<?> response = ResponseEntity.status(HttpStatus.NOT_FOUND).body("No dentist found with given id");
+    public ResponseEntity<DentistDTO> updateDentist(@RequestBody DentistDTO dentistDTO) {
+        ResponseEntity<DentistDTO> response = ResponseEntity.notFound().build();
         if (dentistDTO.getId() != null) {
             DentistDTO dentistUpdated = dentistService.updateDentist(dentistDTO);
             if (dentistUpdated != null) {
@@ -101,7 +101,7 @@ public class DentistController {
      * @param id the id of the dentist to be deleted
      * @return json
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<String> deleteDentistById(@PathVariable Long id) {
         String message = dentistService.deleteDentistById(id);
         return ResponseEntity.ok(message);

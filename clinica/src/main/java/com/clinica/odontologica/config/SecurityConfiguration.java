@@ -1,5 +1,6 @@
-package com.clinica.odontologica.login;
+package com.clinica.odontologica.config;
 
+import com.clinica.odontologica.repository.entity.Role;
 import com.clinica.odontologica.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
